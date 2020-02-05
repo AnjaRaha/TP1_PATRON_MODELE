@@ -12,9 +12,11 @@
           <e p="Builder.cs" t="Include" />
           <e p="FluxBuilder.cs" t="Include" />
           <e p="FluxProduct.cs" t="Include" />
+          <e p="TypeProtocol.cs" t="Include" />
         </e>
         <e p="Communication" t="Include">
           <e p="ComFactory.cs" t="Include" />
+          <e p="TypeCommunication.cs" t="Include" />
         </e>
         <e p="obj" t="ExcludeRecursive">
           <e p="Debug" t="Include">

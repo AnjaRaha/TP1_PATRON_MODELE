@@ -2,6 +2,8 @@
 {
     public interface Task
     {
-        
+        void Execute();
+
+        void Task(System.Action lambda);
     }
 }

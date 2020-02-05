@@ -2,6 +2,19 @@
 {
     public class Flow
     {
-        
+        public void Send()
+        {
+            
+        }
+
+        public void Receive()
+        {
+            
+        }
+
+        public Flow()
+        {
+            
+        }
     }
 }
