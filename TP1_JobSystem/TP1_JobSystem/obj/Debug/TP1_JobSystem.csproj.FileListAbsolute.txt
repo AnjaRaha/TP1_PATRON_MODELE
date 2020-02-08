@@ -1,0 +1,7 @@
+C:\Users\Ramatoulaye Leye\Desktop\UQAC\UQAC_Session2\TP1_JobSystem\TP1_JobSystem\bin\Debug\TP1_JobSystem.exe.config
+C:\Users\Ramatoulaye Leye\Desktop\UQAC\UQAC_Session2\TP1_JobSystem\TP1_JobSystem\bin\Debug\TP1_JobSystem.exe
+C:\Users\Ramatoulaye Leye\Desktop\UQAC\UQAC_Session2\TP1_JobSystem\TP1_JobSystem\bin\Debug\TP1_JobSystem.pdb
+C:\Users\Ramatoulaye Leye\Desktop\UQAC\UQAC_Session2\TP1_JobSystem\TP1_JobSystem\obj\Debug\TP1_JobSystem.csprojResolveAssemblyReference.cache
+C:\Users\Ramatoulaye Leye\Desktop\UQAC\UQAC_Session2\TP1_JobSystem\TP1_JobSystem\obj\Debug\TP1_JobSystem.csproj.CoreCompileInputs.cache
+C:\Users\Ramatoulaye Leye\Desktop\UQAC\UQAC_Session2\TP1_JobSystem\TP1_JobSystem\obj\Debug\TP1_JobSystem.exe
+C:\Users\Ramatoulaye Leye\Desktop\UQAC\UQAC_Session2\TP1_JobSystem\TP1_JobSystem\obj\Debug\TP1_JobSystem.pdb

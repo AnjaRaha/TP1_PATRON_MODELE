@@ -1,41 +1,11 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\tsile\.Rider2019.2\config\extensions" t="IncludeRecursive" />
-    <e p="C:\Users\tsile\.Rider2019.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\tsile\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_TP1_PATRON_MODELE.-1880642399.00" t="ExcludeRecursive" />
-    <e p="C:\Users\tsile\Documents\A5\PATRON\TP_PatronM\TP1_PATRON_MODELE\TP1_PATRON_MODELE" t="IncludeFlat">
-      <e p="packages" t="ExcludeRecursive" />
+    <e p="C:\Users\Ramatoulaye Leye\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\Ramatoulaye Leye\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_TP1_PATRON_MODELE.1100641052.00" t="ExcludeRecursive" />
+    <e p="C:\Users\Ramatoulaye Leye\Desktop\UQAC\UQAC_Session2\Patrons_modeles\TP1_Patrons_Modeles\TP1_PATRON_MODELE\TP1_PATRON_MODELE" t="IncludeFlat">
       <e p="TP1" t="IncludeRecursive">
-        <e p="bin" t="ExcludeRecursive" />
-        <e p="Builder" t="Include">
-          <e p="Builder.cs" t="Include" />
-          <e p="FluxBuilder.cs" t="Include" />
-          <e p="FluxProduct.cs" t="Include" />
-        </e>
-        <e p="Communication" t="Include">
-          <e p="ComFactory.cs" t="Include" />
-        </e>
-        <e p="obj" t="ExcludeRecursive">
-          <e p="Debug" t="Include">
-            <e p="netcoreapp3.1" t="Include">
-              <e p="TP1.AssemblyInfo.cs" t="Include" />
-            </e>
-          </e>
-        </e>
-        <e p="Program.cs" t="Include" />
-        <e p="Task" t="Include">
-          <e p="SendMsgTask.cs" t="Include" />
-          <e p="Task.cs" t="Include" />
-          <e p="TaskExecutor.cs" t="Include" />
-        </e>
         <e p="TP1.csproj" t="IncludeRecursive" />
-        <e p="Traffic" t="Include">
-          <e p="CompDecorator.cs" t="Include" />
-          <e p="EncDecorator.cs" t="Include" />
-          <e p="Flow.cs" t="Include" />
-          <e p="FlowDecorator.cs" t="Include" />
-        </e>
       </e>
       <e p="TP1_PATRON_MODELE.sln" t="IncludeFlat" />
     </e>
