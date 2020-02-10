@@ -12,10 +12,14 @@ namespace TP1_JobSystem.Traffic
         {
 
         }
-        public void SendClear(Flow _flow)
+
+        
+        public override void send(Flow _flow)
         {
             Console.WriteLine("***** SENDING CLEAR ******");
-           this.send(_flow);
+            Console.WriteLine("Sending task to executor");
+            this.executor.enqueue(_flow.getTask());
+            //this.send(_flow);
         }
     }
 }

@@ -17,6 +17,8 @@ namespace TP1_JobSystem.Task
 
         private ComFactory modeCommunication;
         private FluxBuilder builder;
+      
+        static SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(0);
 
 
 
@@ -63,57 +65,132 @@ namespace TP1_JobSystem.Task
             }
         }
 
-        public async void Work()
+
+
+        /************ SECOURS ************/
+       /* public async void Work()
         {
-
-            while (queue.Count >= 0)
+            while (true)
             {
+                while (queue.Count > 1)
+                {
 
 
-                 if (queue.Count >= 1)
-                  {
+                    lock (queue.First())
+                    {
 
+                        TaskCommand taskTemplate = (TaskCommand)queue.First();
+                        queue.Remove(taskTemplate);
 
-                
-                TaskCommand taskTemplate = (TaskCommand)queue.First();                    
-                queue.Remove(taskTemplate);
+                        //builder.getFlow().setTask(taskTemplate);
 
-                //builder.getFlow().setTask(taskTemplate);
-
-                Console.WriteLine(String.Concat("Thread Name = ", Thread.CurrentThread.Name));
-                    taskTemplate.Execute();
-
-                // test de l'affichage
-
-                await System.Threading.Tasks.Task.Delay(500);
-
-
+                        Console.WriteLine(String.Concat("Thread Name = ", Thread.CurrentThread.Name));
+                        taskTemplate.Execute();
 
                    }
-                
-                    
+                    Thread currentThread = threads.First();
+                    threads.Remove(currentThread);
+
+
+
+                    Thread.Sleep(500);
+                    threads.Add(currentThread);
+
+
+                }
+            }
+        }
+        */
+
+        /*********** SEMAPHORE ASYNCRONE *******/
+        public async void Work()
+        {
+           /// Console.WriteLine(queue.Count + "= TAILLE INITIALE" );
+            while (true)
+            {
+
+                while (queue.Count > 0)
+                {
+                   
+
+                    if (queue.Count >= 1)
+                    {
+                        
+
+                        TaskCommand taskTemplate = (TaskCommand)queue.First();
+                        
+                        queue.Remove(taskTemplate);
+
+                        Console.WriteLine(String.Concat("Thread Name = ", Thread.CurrentThread.Name));
+                        taskTemplate.Execute();
+
+
+                        
+
+                        //builder.getFlow().setTask(taskTemplate);
+
+                        try
+                        {
+
+                            await _semaphoreSlim.WaitAsync();
+
+                        }
+
+                        finally
+                        {
+
+                            _semaphoreSlim.Release();
+                        }
+
+
+
+
+                    }
+
+
+
+
+
+                    // await System.Threading.Tasks.Task.Delay(500);
+
+                    if (threads.Count > 1)
+                    {
+                        Thread currentThread = threads.First();
+                       threads.Remove(currentThread);
+
+
+
+                      //  Thread.Sleep(500);
+                        threads.Add(currentThread);
+                       
+
+                    }
+                   
+
+
+
+
+                }
+               
+            }
+
             
 
-            }
-            //on met le thread courant à la fin de la liste de threads
-            Thread currentThread = threads.First();
-            threads.Remove(currentThread);
-          
-
-
-            Thread.Sleep(500);
-            threads.Add(currentThread);
 
         }
 
            
-
+    
         
 
        
         public void enqueue(TaskCommand _task)
         {
-            queue.Add(_task);
+            lock (queue)
+            {
+                queue.Add(_task);
+            }
+           
         }
 
         public int getNumThread()

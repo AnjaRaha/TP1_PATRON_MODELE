@@ -10,7 +10,7 @@ namespace TP1_JobSystem.Traffic
     public class FlowDecorator
     {
         private Flow data;
-        private TaskExecutor executor;
+        protected TaskExecutor executor;
 
         public TaskExecutor Executor { get => executor; set => executor = value; }
 
@@ -26,7 +26,8 @@ namespace TP1_JobSystem.Traffic
             this.executor = new TaskExecutor();
         }
 
-        public void send(Flow flow)
+       
+       public virtual void send(Flow flow)
         {
             Console.WriteLine("Sending task to executor");
             this.executor.enqueue(flow.getTask());

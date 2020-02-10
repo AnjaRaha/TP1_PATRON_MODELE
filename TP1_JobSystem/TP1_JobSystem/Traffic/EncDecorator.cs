@@ -13,9 +13,12 @@ namespace TP1_JobSystem.Traffic
 
         }
 
-        public void encrypt(Flow _flow)
+        public override void send(Flow _flow)
         {
             Console.WriteLine("***** ENCRYPTION ******");
+            Console.WriteLine("Sending task to executor");
+            this.executor.enqueue(_flow.getTask());
+            // this.send(_flow);
         }
 
 
