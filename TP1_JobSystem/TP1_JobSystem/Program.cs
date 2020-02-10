@@ -18,7 +18,7 @@ namespace TP1_JobSystem
 
             //creéation propriétés communications 
             TypeCommunication typeCom = TypeCommunication.UDP;
-            Property property = Property.CLEAR;
+            Property property = Property.COMPRESSED;
 
             //création flow builder
             FluxBuilder builder = 
@@ -26,13 +26,14 @@ namespace TP1_JobSystem
 
             //création flow decorator
             FlowDecorator flowDecorator = builder.getResult();
+            Console.WriteLine(flowDecorator.GetType().Name);
 
 
             // Création task executor
             TaskExecutor executor = new TaskExecutor(builder);
             flowDecorator.Executor = executor;
 
-            Console.WriteLine(executor.getNumThread());
+           
 
             //création de 2 taches
             SendMsgTask tache1 = new SendMsgTask("tache1"); flowDecorator.send(new Flow(tache1));
@@ -40,6 +41,7 @@ namespace TP1_JobSystem
             SendMsgTask tache3 = new SendMsgTask("tache3"); flowDecorator.send(new Flow(tache3));
             SendMsgTask tache4 = new SendMsgTask("tache4"); flowDecorator.send(new Flow(tache4));
             SendMsgTask tache5 = new SendMsgTask("tache5"); flowDecorator.send(new Flow(tache5));
+            Console.WriteLine("euh");
 
            /* executor.enqueue(tache1);
             executor.enqueue(tache2);
