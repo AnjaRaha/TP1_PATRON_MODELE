@@ -45,18 +45,21 @@ namespace TP1_JobSystem.Builder
 
             if (property.Equals(Property.CLEAR))
             {
-                Console.WriteLine("Création decorator CLEAR flow");
+                Console.WriteLine("*******Propriété d'envoi : CLEAR -------> Création decorator CLEAR flow");
+                Console.WriteLine();
                 _flowDecorator = new ClearDecorator(this.flow); 
             }
 
             if (property.Equals(Property.COMPRESSED))
             {
-                Console.WriteLine("Création decorator COMPRESSED flow");
+                Console.WriteLine("*******Propriété d'envoi : COMPRESSED -------> Création decorator COMPRESSED flow");
+                Console.WriteLine();
                 _flowDecorator = new CompDecorator(this.flow);
             }
             if (property.Equals(Property.ENCRYPTED))
             {
-                Console.WriteLine("Création decorator ENCRYPTED flow");
+                Console.WriteLine("*******Propriété d'envoi : ENCRYPTED -------> Création decorator ENCRYPTED flow");
+                Console.WriteLine();
                 _flowDecorator = new EncDecorator(this.flow);
             }
         }
@@ -70,15 +73,16 @@ namespace TP1_JobSystem.Builder
 
             if (_typeCommunication.Equals(TypeCommunication.UDP))
             {
-
-                Console.WriteLine("Création Flux UDP ");
+                Console.WriteLine("*******Type de communication : UDP -------> Création flux UDP ");
+                Console.WriteLine();
                 UDPFactory udpFactory = new UDPFactory();
                 this.flow = udpFactory.CreateFlux();
             }
 
             if (_typeCommunication.Equals(TypeCommunication.TCP))
             {
-                Console.WriteLine("Création Flux TCP ");
+                Console.WriteLine("*******Type de communication : TCP -------> Création flux TCP ");
+                Console.WriteLine();
                 TCPFactory tcpFactory = new TCPFactory();
                 this.flow = tcpFactory.CreateFlux();
             }
