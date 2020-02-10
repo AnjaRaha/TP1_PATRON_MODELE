@@ -14,11 +14,7 @@ namespace TP1_JobSystem.Task
     {
         private List<TaskCommand> queue { get; set; }
         private List<Thread> threads { get; set; }
-
-        private ComFactory modeCommunication;
-        private FluxBuilder builder;
-      
-        static SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(0);
+        static SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(2);
 
 
 
@@ -38,6 +34,8 @@ namespace TP1_JobSystem.Task
             queue = new List<TaskCommand>();
            
             int nbThreads = builder.getNumThread();
+            Console.WriteLine("*******Taille de la Pool : "+ nbThreads + " threads ");
+            Console.WriteLine();
             for (int iterateurThread = 0; iterateurThread < nbThreads; iterateurThread++)
             {
                 Thread newThread = new Thread(new ThreadStart(Work)) { Name = "Thread " + iterateurThread.ToString() };
@@ -45,7 +43,7 @@ namespace TP1_JobSystem.Task
                 threads.Add(newThread);
             }
 
-            //Console.WriteLine("COUNT " +  threads.Count);
+    
             
         }
 
@@ -56,82 +54,45 @@ namespace TP1_JobSystem.Task
         public void Start()
         {
             Work();
+          /* foreach(Thread thread in threads){
+                thread.Start();
+            }*/
         }
         public void Stop()
         {
-            foreach (Thread thr in threads)
+            var fixedSize = threads.ToArray();
+            foreach (Thread thread in fixedSize)
             {
-                thr.Abort();
+                thread.Abort();
+                Console.WriteLine("Arret de " + thread.Name);
             }
+
+            Console.WriteLine();
+           Console.WriteLine("Execution terminée");
+           
         }
 
 
 
-        /************ SECOURS ************/
-       /* public async void Work()
-        {
-            while (true)
-            {
-                while (queue.Count > 1)
-                {
 
-
-                    lock (queue.First())
-                    {
-
-                        TaskCommand taskTemplate = (TaskCommand)queue.First();
-                        queue.Remove(taskTemplate);
-
-                        //builder.getFlow().setTask(taskTemplate);
-
-                        Console.WriteLine(String.Concat("Thread Name = ", Thread.CurrentThread.Name));
-                        taskTemplate.Execute();
-
-                   }
-                    Thread currentThread = threads.First();
-                    threads.Remove(currentThread);
-
-
-
-                    Thread.Sleep(500);
-                    threads.Add(currentThread);
-
-
-                }
-            }
-        }
-        */
-
-        /*********** SEMAPHORE ASYNCRONE *******/
+        /*********** FONCTION EFFECTUE ¨PAR LES THREADS ASYNCRONE *******/
         public async void Work()
         {
-           /// Console.WriteLine(queue.Count + "= TAILLE INITIALE" );
+            /// Console.WriteLine(queue.Count + "= TAILLE INITIALE" );
             while (true)
             {
 
-                while (queue.Count > 0)
+                while (queue.Count >= 1)
                 {
-                   
-
-                    if (queue.Count >= 1)
+                    if (this.threads.First().Equals(Thread.CurrentThread))
                     {
-                        
-
                         TaskCommand taskTemplate = (TaskCommand)queue.First();
-                        
-                        queue.Remove(taskTemplate);
-
-                        Console.WriteLine(String.Concat("Thread Name = ", Thread.CurrentThread.Name));
-                        taskTemplate.Execute();
-
-
-                        
-
-                        //builder.getFlow().setTask(taskTemplate);
 
                         try
                         {
-
+                            this.RemoveTask(taskTemplate);
+                            Console.WriteLine(String.Concat(" ********* Executed by ", Thread.CurrentThread.Name));
+                            taskTemplate.Execute();
                             await _semaphoreSlim.WaitAsync();
 
                         }
@@ -140,48 +101,20 @@ namespace TP1_JobSystem.Task
                         {
 
                             _semaphoreSlim.Release();
+                            Thread currentThread = threads.First();
+                            threads.Remove(currentThread);
+
+                            Thread.Sleep(500);
+                            threads.Add(currentThread);
                         }
 
 
-
-
                     }
-
-
-
-
-
-                    // await System.Threading.Tasks.Task.Delay(500);
-
-                    if (threads.Count > 1)
-                    {
-                        Thread currentThread = threads.First();
-                       threads.Remove(currentThread);
-
-
-
-                      //  Thread.Sleep(500);
-                        threads.Add(currentThread);
-                       
-
-                    }
-                   
-
-
-
 
                 }
-               
+
             }
-
-            
-
-
         }
-
-           
-    
-        
 
        
         public void enqueue(TaskCommand _task)
@@ -193,11 +126,32 @@ namespace TP1_JobSystem.Task
            
         }
 
+        public void RemoveTask(TaskCommand _task)
+        {
+            lock (queue)
+            {
+                queue.Remove(_task);
+            }
+        }
+
         public int getNumThread()
         {
             return threads.Count;
         }
 
+        public TaskCommand getFirst()
+        {
+            TaskCommand firstTask = null;
+            lock (queue)
+            {
+                if (queue.Count > 0)
+                {
+                    firstTask = queue.First();
+                }
+              
+            }
+            return firstTask;
+        }
 
 
     }

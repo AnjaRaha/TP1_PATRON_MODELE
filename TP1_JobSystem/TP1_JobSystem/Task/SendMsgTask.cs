@@ -11,11 +11,13 @@ namespace TP1_JobSystem.Task
     {
         private System.Action notification;
         private String msg;
-      //  private Flow flow;
+        //  private Flow flow;
 
         public void Execute()
         {
-             this.notification.Invoke();
+            notification = () => Console.WriteLine(this.msg + " --- > DONE ." + "\n \n");
+
+            this.notification.Invoke();
 
             
             
@@ -35,10 +37,10 @@ namespace TP1_JobSystem.Task
 
         public SendMsgTask(String msg)
         {
-            msg = msg;
+            this.msg = msg;
           //  flow = new Flow(this);
             
-            notification = () => Console.WriteLine(msg + " : Message has been sent.");
+            notification = () => Console.WriteLine(msg + " : Message creation.");
 
         }
 

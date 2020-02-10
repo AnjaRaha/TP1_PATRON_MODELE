@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using TP1_JobSystem.Builder;
 using TP1_JobSystem.Communication;
@@ -14,43 +15,64 @@ namespace TP1_JobSystem
     {
         static void Main(string[] args)
         {
-          
 
-            //creéation propriétés communications 
-            TypeCommunication typeCom = TypeCommunication.UDP;
-            Property property = Property.COMPRESSED;
+            /************************ INITIALISATION API - PARAMETRES  ********************/
+            Console.WriteLine("/************************ INITIALISATION API ********************/");
 
-            //création flow builder
-            FluxBuilder builder = 
-                new FluxBuilder(6 ,typeCom, property);
+
+            //construction : entrez les paramétres 
+            /* Parametre 1 = nombre threads
+             * Parametre 2 = Protocole communication
+             * Parametre 3 = propriété flux
+             */
+
+            TypeCommunication typeCom = TypeCommunication.UDP; // enum UDP, TCP
+            Property property = Property.COMPRESSED; // enum COMPRESSED, CLEAR, ENCRYPTED
+
+            FluxBuilder builder = new FluxBuilder(3 ,typeCom, property);
+
+
+            /************************ INITIALISATION API -  CONSOLE ********************/
+           
 
             //création flow decorator
             FlowDecorator flowDecorator = builder.getResult();
-            Console.WriteLine(flowDecorator.GetType().Name);
-
-
+         
             // Création task executor
             TaskExecutor executor = new TaskExecutor(builder);
             flowDecorator.Executor = executor;
 
+
+            //simulation de taches et de leur traitement
+
+            int iterateurTaches = 0;
+            Console.WriteLine("Press ESC key to stop simulation");
+            Console.WriteLine();
+
+            do
+            {
+                
+                while (!Console.KeyAvailable)
+                {
+                   
+
+                    SendMsgTask tacheX = new SendMsgTask("tache" + iterateurTaches); flowDecorator.send(new Flow(tacheX));
+                    iterateurTaches++;
+                   
+                    Console.WriteLine("*********Nombre de taches courant : " + iterateurTaches);
+                    
+                    //on simule un laps de temps avant de recevoir d'autres atches
+                    Thread.Sleep(500);
+                    
+
+                }
+                
+                
+            } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
            
+            executor.Stop();
+            Console.WriteLine("Envoi des taches effectués");    
 
-            //création de 2 taches
-            SendMsgTask tache1 = new SendMsgTask("tache1"); flowDecorator.send(new Flow(tache1));
-            SendMsgTask tache2 = new SendMsgTask("tache2"); flowDecorator.send(new Flow(tache2));
-            SendMsgTask tache3 = new SendMsgTask("tache3"); flowDecorator.send(new Flow(tache3));
-            SendMsgTask tache4 = new SendMsgTask("tache4"); flowDecorator.send(new Flow(tache4));
-            SendMsgTask tache5 = new SendMsgTask("tache5"); flowDecorator.send(new Flow(tache5));
-            Console.WriteLine("euh");
-
-           /* executor.enqueue(tache1);
-            executor.enqueue(tache2);
-            executor.enqueue(tache3);
-            executor.enqueue(tache4);
-            executor.enqueue(tache5);*/
-
-            executor.Start();
-        
         }
     }
 }
